@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model List<HallCrawler.Models.HallItem>
+<div class="row">
+
+    <div class="col-12 row">
+        <div class="col-12">
+
+            <div class="alert alert-primary" role="alert">
+                <span>شهر  منتخب: </span>
+                <span>@ViewBag.SelectedHall</span>
+            </div>
+
+
+        </div>
+
+        <div class="col-6">
+            <select class=" form-select form-select-sm" id="cmbCity">
+
+                <option value=""> یک  شهر را انتخاب نماییید </option>
+                <option value="0"> همه </option>
+
+                @foreach (var item in @ViewBag.Cities)
+                {
+                    <option value="@item"> @item </option>
+                }
+
+            </select>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-primary w-25" id="btnSearch"> جستجو</button>
+        </div>
+
+
+
+        <div class="col-6 mt-3">
+            <input  type="text"  id="txtSearch" value="" class="form-control"/>
+        
+        </div>
+        <div class="col-6 mt-3">
+            <button class="btn btn-primary w-25" id="btnSearchTerm"> جستجو</button>
+        </div>
+
+
+    </div>
+
+
+    <div class="col-12 row mt-4">
+        <table class="table table-bordered table-striped ">
+            <thead>
+                <tr class=" table-primary">
+                    <td>#</td>
+                    <th style="width:15%">نام تالار</th>
+                    <th>مدیر</th>
+                    <th>ادرس</th>
+                    <th>شماره همراه</th>
+                    <th>تلفن</th>
+                    <th>ظرفیت</th>
+                    <th>شهر</th>
+                    <th>سرویس ها</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    int Count = 1;
+                }
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Count.ToString()</td>
+                            <td>@item.Title </td>
+                            <td>@item.Manager </td>
+                            <td>@item.Address </td>
+                            <td>@item.CellPhone </td>
+                            <td>@item.Tel </td>
+                            <td>@item.Capacity </td>
+                            <td>@item.City </td>
+                            <td>@item.Services </td>
+                        </tr>
+
+                        Count++;
+                    }
+
+                }
+
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+</div>
+
+
+@section Scripts{
+    <script>
+
+        $('#btnSearch').on('click', function () {
+
+            var city = $('#cmbCity').val();
+
+      
+            var href = "/home/index/?id=" + city;
+         
+            window.location.href = href;
+        });
+
+        $('#btnSearchTerm').on('click', function () {
+
+           
+            var term = $('#txtSearch').val();
+            console.log(term);
+            var href = "/home/index/?id=&term=" + term;
+            console.log(href);
+            window.location.href = href;
+        });
+
+
+        //$('#cmbCity').on('change', function () {
+           
+        //});
+    </script>
+
+}
